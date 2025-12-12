@@ -15,7 +15,7 @@ class CachedRandomPriceProvider(
     private val priceCache: MutableMap<String, BigDecimal> = ConcurrentHashMap()
 
 
-     //[조회 책임]: 외부에서 주가를 조회할 때 사용됩니다. 캐시된 현재 가격을 반환합니다.
+    //[조회 책임]: 외부에서 주가를 조회할 때 사용됩니다. 캐시된 현재 가격을 반환합니다.
 
     override fun getPrice(stock: Stock): BigDecimal {
         // 캐시에 없으면 Stock 객체의 현재 가격(초기값)을 사용합니다.
@@ -25,7 +25,7 @@ class CachedRandomPriceProvider(
     }
 
 
-     //[갱신 책임]: PriceUpdateService에 의해 1분마다 호출됩니다.
+    //[갱신 책임]: PriceUpdateService에 의해 1분마다 호출됩니다.
 
     fun updateAllPrices(stocks: List<Stock>) {
         stocks.forEach { stock ->
@@ -45,3 +45,5 @@ class CachedRandomPriceProvider(
             stock.currentPrice = newPrice
         }
     }
+
+}

@@ -1,4 +1,3 @@
-// service/StockService.kt
 package service
 
 import domain.Stock
@@ -7,8 +6,6 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 // UI에 표시할 주식 정보를 담는 DTO (Data Transfer Object)
-
-
 data class StockInfo(
     val name: String,
     val currentPrice: BigDecimal,

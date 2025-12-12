@@ -1,7 +1,5 @@
 package controller
 
-
-
 import service.AuthService
 import domain.User
 
