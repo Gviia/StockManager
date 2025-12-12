@@ -24,7 +24,12 @@ class TradingService(
         // 4. 포트폴리오 갱신 (평균 단가 계산 로직 포함)
         user.portfolio.addOrUpdateItem(stock, qty, price)
 
-        return TradeResult(success = true, message = "${stock.name} ${qty}주 매수 완료!")
+        return TradeResult(
+            success = true,
+            message = "${stock.name} ${qty}주 매수 완료!",
+            amount = totalCost,
+            remainingCash = user.cash
+        )
     }
 
     fun sell(user: User, stock: Stock, qty: Long): TradeResult {
@@ -46,6 +51,11 @@ class TradingService(
         // 4. 포트폴리오 갱신 (수량 차감)
         user.portfolio.subtractQuantity(stock.name, qty)
 
-        return TradeResult(success = true, message = "${stock.name} ${qty}주 매도 완료!")
+        return TradeResult(
+            success = true,
+            message = "${stock.name} ${qty}주 매도 완료!",
+            amount = revenue,
+            remainingCash = user.cash // ⬅️ 수정: 현재 유저의 최종 잔액 반영
+        )
     }
 }
