@@ -26,8 +26,9 @@ class Portfolio {
             // 4. 새로운 평균 단가 계산 (소수점 2자리까지 반올림)
             existingItem.averagePrice = totalCost.divide(
                 BigDecimal(totalQuantity),
-                2, // 소수점 자릿수
-                RoundingMode.HALF_UP
+                // 소수점 4자리까지 계산 (평단가는 정확해야 함)
+                4,
+                java.math.RoundingMode.HALF_UP
             )
             existingItem.quantity = totalQuantity
         } else {

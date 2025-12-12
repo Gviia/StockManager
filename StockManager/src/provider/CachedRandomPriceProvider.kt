@@ -31,14 +31,13 @@ class CachedRandomPriceProvider(
         stocks.forEach { stock ->
             val stockName = stock.name
 
-            // 1. 현재 캐시된 가격을 가져옵니다. (PriceProvider를 통해 조회)
-            val currentPrice = priceCache.getOrPut(stockName) { stock.currentPrice }
+            // 1. 현재 가격을 '전일가(previousPrice)'로 백업합니다.
+            stock.previousPrice = priceCache.getOrPut(stockName) { stock.currentPrice }
 
-            // 2. 가격 계산 책임을 RandomPriceProvider에게 위임합니다.
-            //    RandomPriceProvider가 (현재 가격) -> (새로운 가격) 로직을 처리합니다.
-            val newPrice = randomPriceProvider.getUpdatedPrice(stock, currentPrice)
+            // 2. 새로운 가격을 계산합니다.
+            val newPrice = randomPriceProvider.getUpdatedPrice(stock, stock.previousPrice)
 
-            // 3. 캐시와 Stock 객체의 가격을 갱신합니다.
+            // 3. 캐시와 Stock 객체의 가격을 새로운 가격으로 갱신합니다.
             priceCache[stockName] = newPrice
             stock.currentPrice = newPrice
         }
